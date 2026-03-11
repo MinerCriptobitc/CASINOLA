@@ -1,49 +1,57 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
-<meta charset="UTF-8">
-<title>Casino Demo</title>
-<link rel="stylesheet" href="style.css">
+
+<title>Ruleta</title>
+
+<style>
+
+body{
+background:black;
+color:white;
+text-align:center;
+font-family:Arial;
+}
+
+button{
+padding:20px;
+font-size:20px;
+background:gold;
+border:none;
+border-radius:10px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="hero">
+<h1>🎡 Ruleta</h1>
 
-<h1>🎰 Casino Demo</h1>
+<p id="result">Presiona girar</p>
 
-<div class="buttons">
-<button onclick="showRegister()">Registrarse</button>
-<button onclick="showLogin()">Iniciar sesión</button>
-</div>
+<button onclick="spin()">Girar</button>
 
-</div>
+<br><br>
 
-<div id="register" class="form hidden">
+<a href="slot.html">
+<button>Ir a tragamonedas</button>
+</a>
 
-<h2>Registro</h2>
+<script>
 
-<input type="text" id="regUser" placeholder="Usuario">
-<input type="email" id="regEmail" placeholder="Email">
-<input type="password" id="regPass" placeholder="Contraseña">
+function spin(){
 
-<button onclick="register()">Crear cuenta</button>
+let number = Math.floor(Math.random()*37)
 
-</div>
+document.getElementById("result").innerText =
+"Salió el número: " + number
 
-<div id="login" class="form hidden">
+}
 
-<h2>Login</h2>
-
-<input type="text" id="logUser" placeholder="Usuario">
-<input type="password" id="logPass" placeholder="Contraseña">
-
-<button onclick="login()">Entrar</button>
-
-</div>
-
-<script src="script.js"></script>
+</script>
 
 </body>
 </html>
