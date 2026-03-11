@@ -1,131 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Casino - Sistema de Banca</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0f172a; color: white; font-family: sans-serif; }
-        .casino-card { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid #334155; }
-    </style>
+<meta charset="UTF-8">
+<title>Casino Demo</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="p-4">
 
-    <nav class="flex justify-between items-center mb-8 p-4 bg-slate-800 rounded-lg shadow-lg">
-        <h1 class="text-2xl font-bold text-yellow-500">GEMINI CASINO <span class="text-xs text-white opacity-50">DEMO v1.0</span></h1>
-        <div class="flex gap-4 items-center">
-            <span class="bg-slate-900 px-4 py-2 rounded border border-yellow-500">
-                Saldo: <span id="userBalance" class="font-mono text-yellow-400">0</span> fichas
-            </span>
-            <button onclick="toggleView('admin')" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">Panel Admin</button>
-            <button onclick="toggleView('casino')" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm">Ir a Jugar</button>
-        </div>
-    </nav>
+<body>
 
-    <section id="casinoView" class="max-w-4xl mx-auto">
-        <h2 class="text-xl mb-4 font-semibold text-blue-400 italic underline">Área de Juegos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-            <div class="casino-card p-8 rounded-2xl shadow-2xl">
-                <h3 class="text-2xl mb-4">🎲 Dados de la Suerte</h3>
-                <p class="text-sm text-gray-400 mb-6 text-balance">Apuesta y saca más de 3 para ganar el doble.</p>
-                <input type="number" id="betAmount" placeholder="Monto a apostar" class="w-full mb-4 p-2 rounded bg-slate-900 border border-slate-700 text-center">
-                <button onclick="playDice()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition-all">GIRAR DADOS</button>
-                <p id="gameResult" class="mt-4 font-bold text-lg"></p>
-            </div>
-            
-            <div class="casino-card p-8 rounded-2xl opacity-75 border-dashed border-2">
-                <h3 class="text-2xl mb-4">🎰 Slot Proxima (Bloqueada)</h3>
-                <p class="text-sm text-gray-400">Aquí puedes enlazar un Iframe de un demo externo.</p>
-                <div class="h-24 bg-slate-900 flex items-center justify-center mt-4 rounded">
-                    [ PRÓXIMAMENTE ]
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="hero">
 
-    <section id="adminView" class="hidden max-w-4xl mx-auto">
-        <div class="bg-slate-800 p-6 rounded-xl border-t-4 border-red-600 shadow-xl">
-            <h2 class="text-2xl mb-6 font-bold flex items-center gap-2">⚙️ Panel de Gestión de Banca</h2>
-            
-            <div class="bg-slate-900 p-4 rounded-lg mb-6">
-                <h3 class="text-lg mb-2 text-red-400 font-semibold">Cargar Fichas al Usuario</h3>
-                <div class="flex gap-2">
-                    <input type="number" id="addCredits" placeholder="Cantidad de fichas" class="flex-1 p-2 rounded bg-slate-800 border border-slate-600">
-                    <button onclick="processCharge()" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded font-bold">CARGAR AHORA</button>
-                </div>
-            </div>
+<h1>🎰 Casino Demo</h1>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-slate-900 p-4 rounded-lg text-center">
-                    <p class="text-gray-400 text-xs">Total Invertido (Cargas)</p>
-                    <p id="totalLoaded" class="text-2xl text-green-400">$0</p>
-                </div>
-                <div class="bg-slate-900 p-4 rounded-lg text-center">
-                    <p class="text-gray-400 text-xs">Ganancia de Casa (GGR)</p>
-                    <p id="houseProfit" class="text-2xl text-blue-400">$0</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="buttons">
+<button onclick="showRegister()">Registrarse</button>
+<button onclick="showLogin()">Iniciar sesión</button>
+</div>
 
-    <script>
-        // Lógica del Sistema (El "Cerebro")
-        let balance = 0;
-        let totalInvested = 0;
-        let houseProfit = 0;
+</div>
 
-        function updateUI() {
-            document.getElementById('userBalance').innerText = balance;
-            document.getElementById('totalLoaded').innerText = '$' + totalInvested;
-            document.getElementById('houseProfit').innerText = '$' + houseProfit;
-        }
+<div id="register" class="form hidden">
 
-        // Sistema de Carga (Acción de Admin)
-        function processCharge() {
-            const amount = parseInt(document.getElementById('addCredits').value);
-            if (amount > 0) {
-                balance += amount;
-                totalInvested += amount;
-                alert(`¡Éxito! Has cargado ${amount} fichas al usuario.`);
-                document.getElementById('addCredits').value = '';
-                updateUI();
-            }
-        }
+<h2>Registro</h2>
 
-        // Lógica de Juego (Simulación de ventaja de la casa)
-        function playDice() {
-            const bet = parseInt(document.getElementById('betAmount').value);
-            const resultDisplay = document.getElementById('gameResult');
+<input type="text" id="regUser" placeholder="Usuario">
+<input type="email" id="regEmail" placeholder="Email">
+<input type="password" id="regPass" placeholder="Contraseña">
 
-            if (isNaN(bet) || bet <= 0 || bet > balance) {
-                resultDisplay.className = "mt-4 text-red-500";
-                resultDisplay.innerText = "Saldo insuficiente o apuesta inválida.";
-                return;
-            }
+<button onclick="register()">Crear cuenta</button>
 
-            const diceRoll = Math.floor(Math.random() * 6) + 1;
-            
-            if (diceRoll > 3) { // El jugador gana el 50% de las veces en este demo
-                const win = bet; 
-                balance += win;
-                houseProfit -= win;
-                resultDisplay.className = "mt-4 text-green-500 font-bold";
-                resultDisplay.innerText = `🎲 Sacaste ${diceRoll}. ¡GANASTE ${win} fichas!`;
-            } else {
-                balance -= bet;
-                houseProfit += bet;
-                resultDisplay.className = "mt-4 text-red-400";
-                resultDisplay.innerText = `🎲 Sacaste ${diceRoll}. PERDISTE ${bet} fichas.`;
-            }
-            updateUI();
-        }
+</div>
 
-        // Navegación entre vistas
-        function toggleView(view) {
-            document.getElementById('casinoView').classList.toggle('hidden', view !== 'casino');
-            document.getElementById('adminView').classList.toggle('hidden', view !== 'admin');
-        }
-    </script>
+<div id="login" class="form hidden">
+
+<h2>Login</h2>
+
+<input type="text" id="logUser" placeholder="Usuario">
+<input type="password" id="logPass" placeholder="Contraseña">
+
+<button onclick="login()">Entrar</button>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
